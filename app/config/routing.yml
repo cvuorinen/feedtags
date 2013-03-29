@@ -1,0 +1,4 @@
+feedtags_application:
+    resource: "@FeedtagsApplicationBundle/Resources/config/routing.yml"
+    prefix:   /
+

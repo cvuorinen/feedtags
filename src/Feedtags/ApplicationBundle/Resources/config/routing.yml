@@ -1,0 +1,3 @@
+feedtags_application_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: FeedtagsApplicationBundle:Default:index }
