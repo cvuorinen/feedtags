@@ -1,3 +1,7 @@
 feedtags_application_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: FeedtagsApplicationBundle:Default:index }
+
+feedtags_application_createtest:
+    pattern:  /create/
+    defaults: { _controller: FeedtagsApplicationBundle:Default:create }
