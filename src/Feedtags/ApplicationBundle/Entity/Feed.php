@@ -3,6 +3,7 @@
 namespace Feedtags\ApplicationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Feed
@@ -39,6 +40,15 @@ class Feed
      */
     protected $updated;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FeedItem", mappedBy="feed")
+     */
+    protected $items;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -141,5 +151,38 @@ class Feed
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Add items
+     *
+     * @param \Feedtags\ApplicationBundle\Entity\FeedItem $items
+     * @return Feed
+     */
+    public function addItem(\Feedtags\ApplicationBundle\Entity\FeedItem $items)
+    {
+        $this->items[] = $items;
+    
+        return $this;
+    }
+
+    /**
+     * Remove items
+     *
+     * @param \Feedtags\ApplicationBundle\Entity\FeedItem $items
+     */
+    public function removeItem(\Feedtags\ApplicationBundle\Entity\FeedItem $items)
+    {
+        $this->items->removeElement($items);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }

@@ -52,6 +52,12 @@ class FeedItem
      */
     protected $content;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Feed", inversedBy="items")
+     * @ORM\JoinColumn(name="feed_id", referencedColumnName="id")
+     */
+    protected $feed;
+
 
     /**
      * Get id
@@ -176,5 +182,28 @@ class FeedItem
     public function getPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * Set feed
+     *
+     * @param \Feedtags\ApplicationBundle\Entity\Feed $feed
+     * @return FeedItem
+     */
+    public function setFeed(\Feedtags\ApplicationBundle\Entity\Feed $feed = null)
+    {
+        $this->feed = $feed;
+    
+        return $this;
+    }
+
+    /**
+     * Get feed
+     *
+     * @return \Feedtags\ApplicationBundle\Entity\Feed 
+     */
+    public function getFeed()
+    {
+        return $this->feed;
     }
 }
