@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FeedItem
  *
- * @ORM\Table()
+ * @ORM\Table(name="feed_items")
  * @ORM\Entity
  */
 class FeedItem
@@ -29,6 +29,8 @@ class FeedItem
     protected $title;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", unique=true, length=255)
      */
     protected $url;
@@ -41,6 +43,8 @@ class FeedItem
     protected $identifier;
 
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(type="datetime")
      */
     protected $published;
@@ -53,6 +57,8 @@ class FeedItem
     protected $content;
 
     /**
+     * @var \Feedtags\ApplicationBundle\Entity\Feed
+     *
      * @ORM\ManyToOne(targetEntity="Feed", inversedBy="items")
      * @ORM\JoinColumn(name="feed_id", referencedColumnName="id")
      */
@@ -177,7 +183,7 @@ class FeedItem
     /**
      * Get published
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getPublished()
     {
@@ -200,7 +206,7 @@ class FeedItem
     /**
      * Get feed
      *
-     * @return \Feedtags\ApplicationBundle\Entity\Feed 
+     * @return \Feedtags\ApplicationBundle\Entity\Feed
      */
     public function getFeed()
     {

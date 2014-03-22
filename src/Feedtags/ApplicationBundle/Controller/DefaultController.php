@@ -4,13 +4,17 @@ namespace Feedtags\ApplicationBundle\Controller;
 
 use Feedtags\ApplicationBundle\Entity\Feed;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
+    /**
+     * @Template()
+     */
     public function indexAction($name)
     {
-        return $this->render('FeedtagsApplicationBundle:Default:index.html.twig', array('name' => $name));
+        return array('name' => $name);
     }
 
     public function createAction()
@@ -19,7 +23,7 @@ class DefaultController extends Controller
         $feed->setName('Test feed');
         $feed->setDescription('Just testing new feed creation.');
         $feed->setUpdated(new \DateTime());
-        $feed->setUrl('http://feed.example.com/test');
+        $feed->setUrl('http://feed.example.com/test2');
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($feed);

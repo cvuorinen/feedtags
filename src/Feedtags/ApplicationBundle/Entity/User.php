@@ -2,11 +2,11 @@
 
 namespace Feedtags\ApplicationBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Feed
+ * User
  *
  * @ORM\Table(name="users")
  * @ORM\Entity
@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 class User extends BaseUser
 {
     /**
+     * @var integer
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")

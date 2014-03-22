@@ -8,12 +8,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Feed
  *
- * @ORM\Table()
+ * @ORM\Table(name="feeds")
  * @ORM\Entity
  */
 class Feed
 {
     /**
+     * @var integer
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -21,26 +23,36 @@ class Feed
     protected $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     protected $name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     protected $description;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", unique=true, length=255)
      */
     protected $url;
 
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(type="datetime")
      */
     protected $updated;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\OneToMany(targetEntity="FeedItem", mappedBy="feed")
      */
     protected $items;
@@ -146,7 +158,7 @@ class Feed
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -179,7 +191,7 @@ class Feed
     /**
      * Get items
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getItems()
     {
