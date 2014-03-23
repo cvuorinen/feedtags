@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c612499a25fe3470e107273cdd8a735a",
+    "hash": "fd3bf46c8bec3e7d270831d230252438",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -862,46 +862,46 @@
             "time": "2014-02-08 16:35:09"
         },
         {
-            "name": "friendsofsymfony/user-bundle",
+            "name": "hwi/oauth-bundle",
             "version": "dev-master",
-            "target-dir": "FOS/UserBundle",
+            "target-dir": "HWI/Bundle/OAuthBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "f8e9255eedc91bc53195de288c9fe640719b2817"
+                "url": "https://github.com/hwi/HWIOAuthBundle.git",
+                "reference": "cb90e60c079bbf3aed8044cd71d5e03e32d60133"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/f8e9255eedc91bc53195de288c9fe640719b2817",
-                "reference": "f8e9255eedc91bc53195de288c9fe640719b2817",
+                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/cb90e60c079bbf3aed8044cd71d5e03e32d60133",
+                "reference": "cb90e60c079bbf3aed8044cd71d5e03e32d60133",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2",
-                "symfony/form": "~2.1",
-                "symfony/framework-bundle": "~2.1",
+                "kriswallsmith/buzz": "~0.7",
+                "php": ">=5.3.3",
+                "symfony/framework-bundle": "~2.3",
+                "symfony/options-resolver": "~2.1",
                 "symfony/security-bundle": "~2.1"
             },
             "require-dev": {
-                "doctrine/doctrine-bundle": "*",
-                "swiftmailer/swiftmailer": ">=4.3, <6.0",
-                "symfony/validator": "~2.1",
-                "symfony/yaml": "~2.1",
-                "twig/twig": "~1.5",
-                "willdurand/propel-typehintable-behavior": "dev-master"
+                "doctrine/orm": "~2.3",
+                "symfony/twig-bundle": "~2.1",
+                "symfony/validator": "~2.1"
             },
             "suggest": {
-                "willdurand/propel-typehintable-behavior": "Needed when using the propel implementation"
+                "doctrine/doctrine-bundle": "to use Doctrine user provider",
+                "friendsofsymfony/user-bundle": "to connect FOSUB with this bundle",
+                "symfony/twig-bundle": "to use the Twig hwi_oauth_* functions"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "0.4-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "FOS\\UserBundle": ""
+                    "HWI\\Bundle\\OAuthBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -910,25 +910,69 @@
             ],
             "authors": [
                 {
-                    "name": "Christophe Coevoet",
-                    "email": "stof@notk.org"
+                    "name": "Geoffrey Bachelet",
+                    "email": "geoffrey.bachelet@gmail.com",
+                    "homepage": "https://github.com/ubermuda"
                 },
                 {
-                    "name": "Thibault Duplessis",
-                    "email": "thibault.duplessis@gmail.com",
-                    "homepage": "http://ornicar.github.com"
+                    "name": "Contributors",
+                    "homepage": "https://github.com/hwi/HWIOAuthBundle/contributors"
                 },
                 {
-                    "name": "FriendsOfSymfony Community",
-                    "homepage": "https://github.com/friendsofsymfony/FOSUserBundle/contributors"
+                    "name": "Alexander",
+                    "email": "iam.asm89@gmail.com",
+                    "homepage": "http://asm89.github.io/"
+                },
+                {
+                    "name": "Joseph Bielawski",
+                    "email": "stloyd@gmail.com"
                 }
             ],
-            "description": "Symfony FOSUserBundle",
-            "homepage": "http://friendsofsymfony.github.com",
+            "description": "Support for authenticating users using both OAuth1.0a and OAuth2 in Symfony2.",
+            "homepage": "http://github.com/hwi/HWIOAuthBundle",
             "keywords": [
-                "User management"
+                "37signals",
+                "Authentication",
+                "amazon",
+                "bitbucket",
+                "bitly",
+                "box",
+                "dailymotion",
+                "deviantart",
+                "disqus",
+                "dropbox",
+                "eventbrite",
+                "facebook",
+                "firewall",
+                "flickr",
+                "foursquare",
+                "github",
+                "google",
+                "instagram",
+                "jira",
+                "linkedin",
+                "mail.ru",
+                "oauth",
+                "oauth1",
+                "oauth2",
+                "odnoklassniki",
+                "qq",
+                "salesforce",
+                "security",
+                "sensio connect",
+                "sina weibo",
+                "stack exchange",
+                "stereomood",
+                "trello",
+                "twitch",
+                "twitter",
+                "vkontakte",
+                "windows live",
+                "wordpress",
+                "yahoo",
+                "yandex"
             ],
-            "time": "2014-03-18 08:55:34"
+            "time": "2014-02-17 15:29:08"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1102,6 +1146,54 @@
                 "minification"
             ],
             "time": "2013-07-19 00:03:27"
+        },
+        {
+            "name": "kriswallsmith/buzz",
+            "version": "v0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kriswallsmith/Buzz.git",
+                "reference": "759432d66387e3433d3b06cb6f773b97225b9b17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/759432d66387e3433d3b06cb6f773b97225b9b17",
+                "reference": "759432d66387e3433d3b06cb6f773b97225b9b17",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Buzz": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Lightweight HTTP client",
+            "homepage": "https://github.com/kriswallsmith/Buzz",
+            "keywords": [
+                "curl",
+                "http client"
+            ],
+            "time": "2013-05-19 03:41:15"
         },
         {
             "name": "monolog/monolog",
@@ -1877,7 +1969,7 @@
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20,
         "doctrine/doctrine-fixtures-bundle": 20,
-        "friendsofsymfony/user-bundle": 20
+        "hwi/oauth-bundle": 20
     },
     "platform": {
         "php": ">=5.5.0"

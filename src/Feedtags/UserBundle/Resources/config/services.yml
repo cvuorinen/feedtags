@@ -1,0 +1,15 @@
+parameters:
+    feedtags_user.user.provider: Feedtags\UserBundle\Service\UserProvider
+    feedtags_user.user.class: Feedtags\UserBundle\Entity\User
+
+services:
+    feedtags_user.user.provider.entity:
+        class: %feedtags_user.user.provider%
+        arguments:
+            - @doctrine
+            - %feedtags_user.user.class%
+            - {google: googleId}
+
+#    feedtags_user.example:
+#        class: %feedtags_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
