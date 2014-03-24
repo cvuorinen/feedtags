@@ -2,60 +2,37 @@
 
 namespace Feedtags\UserBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * User
- *
+ * @ORM\Entity()
  * @ORM\Table(name="users")
- * @ORM\Entity
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="google_id", type="string", length=255, unique=true, nullable=true)
      */
-    private $name;
+    protected $googleId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @ORM\Column(name="google_access_token", type="string", length=255, nullable=true)
      */
-    private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
-     */
-    private $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="googleId", type="string", length=255, unique=true, nullable=true)
-     */
-    private $googleId;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="roles", type="array")
-     */
-    private $roles;
-
+    protected $googleAccessToken;
 
     /**
      * Get id
@@ -65,75 +42,6 @@ class User
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return User
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Get username
-     *
-     * @return string 
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 
     /**
@@ -160,25 +68,25 @@ class User
     }
 
     /**
-     * Set roles
+     * Set googleAccessToken
      *
-     * @param array $roles
+     * @param string $googleAccessToken
      * @return User
      */
-    public function setRoles($roles)
+    public function setGoogleAccessToken($googleAccessToken)
     {
-        $this->roles = $roles;
+        $this->googleAccessToken = $googleAccessToken;
 
         return $this;
     }
 
     /**
-     * Get roles
+     * Get googleAccessToken
      *
-     * @return array 
+     * @return string 
      */
-    public function getRoles()
+    public function getGoogleAccessToken()
     {
-        return $this->roles;
+        return $this->googleAccessToken;
     }
 }

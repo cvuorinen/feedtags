@@ -68,14 +68,29 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
 
+# FOSUserBundle Configuration
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Feedtags\UserBundle\Entity\User
+
 # HWIOAuthBundle Configuration
 hwi_oauth:
+    connect:
+        account_connector: feedtags_user.user.provider
     firewall_name: main
+    fosub:
+        username_iterations: 30
+        properties:
+            google: googleId
     resource_owners:
         google:
             type:          google
             client_id:     %google_oauth_client_id%
             client_secret: %google_oauth_client_secret%
-            scope:         "email profile"
+            scope:         "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            paths:
+                email:          email
+                profilepicture: picture
             options:
                 access_type: offline
