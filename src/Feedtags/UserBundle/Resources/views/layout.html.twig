@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% trans_default_domain 'FeedtagsUserBundle' %}
+
+{% block title %}Feedtags - {{ 'Login'|trans }}{% endblock %}
+
+{% block body %}
+    {% block fos_user_content %}{% endblock %}
+{% endblock %}
