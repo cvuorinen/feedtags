@@ -13,3 +13,6 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    google_oauth_client_id: ChangeThisToRealClientId
+    google_oauth_client_secret: ChangeThisToRealClientSecret

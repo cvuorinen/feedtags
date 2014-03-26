@@ -1,0 +1,15 @@
+{% extends "FeedtagsUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FeedtagsUserBundle' %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div>{{ error|trans }}</div>
+{% endif %}
+
+<h2>{{ 'Sign in with'|trans }}</h2>
+<a href="{{ path('hwi_oauth_service_redirect', {'service': 'google'}) }}">
+    <img src="{{ asset('bundles/feedtagsuser/images/google-login.png') }}" alt="Google"/>
+</a>
+
+{% endblock fos_user_content %}

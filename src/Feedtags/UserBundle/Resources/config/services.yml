@@ -1,0 +1,9 @@
+parameters:
+    feedtags_user.user.provider.class: Feedtags\UserBundle\Service\UserProvider
+
+services:
+    feedtags_user.user.provider:
+        class: %feedtags_user.user.provider.class%
+        arguments:
+            - @fos_user.user_manager
+            - { google: googleId }
