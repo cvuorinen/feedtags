@@ -1,0 +1,19 @@
+{
+  "name": "feedtags",
+  "version": "0.0.0",
+  "homepage": "https://github.com/cvuorinen/feedtags",
+  "authors": [
+    "Carl Vuorinen <carl.vuorinen@gmail.com>"
+  ],
+  "description": "Feedtags",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/Feedtags/FrontendBundle/Resources/public/lib",
+    "test",
+    "tests"
+  ]
+}

@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Feedtags\ApplicationBundle\FeedtagsApplicationBundle(),
             new Feedtags\UserBundle\FeedtagsUserBundle(),
+            new Feedtags\FrontendBundle\FeedtagsFrontendBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
