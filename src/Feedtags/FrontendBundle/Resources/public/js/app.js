@@ -10,11 +10,11 @@ angular.module('feedtagsApp', [
             redirectTo: '/feeds'
         })
         .when('/feeds', {
-            templateUrl: '/bundles/feedtagsapplication/partials/feeds.html',
+            templateUrl: '/bundles/feedtagsfrontend/partials/feeds.html',
             controller: 'FeedsController'
         })
         .otherwise({
-            templateUrl: '/bundles/feedtagsapplication/partials/error.html'
+            templateUrl: '/bundles/feedtagsfrontend/partials/error.html'
         });
 })
 .controller('FeedsController', function() {
