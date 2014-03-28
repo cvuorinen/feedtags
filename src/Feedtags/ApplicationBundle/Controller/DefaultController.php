@@ -11,15 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        return [];
-    }
-
-    /**
      * @Route("/create")
      */
     public function createAction()

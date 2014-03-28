@@ -15,5 +15,12 @@
     "src/Feedtags/FrontendBundle/Resources/public/lib",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "angular": "~1.2.15",
+    "angular-route": "~1.2.15",
+    "angular-resource": "~1.2.15",
+    "bootstrap": "~3.1.1"
+  }
 }

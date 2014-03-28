@@ -33,7 +33,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ 'FeedtagsFrontendBundle', 'FeedtagsUserBundle' ]
+    bundles:        [ 'FeedtagsApplicationBundle', 'FeedtagsFrontendBundle', 'FeedtagsUserBundle' ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

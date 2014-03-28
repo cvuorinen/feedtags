@@ -34,8 +34,13 @@ hwi_oauth_redirect:
 google_login:
     pattern: /login/check-google
 
-# FeedtagsApplicationBundle Routes
+# Feedtags Routes
 feedtags_application:
     resource: "@FeedtagsApplicationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+feedtags_frontend:
+    resource: "@FeedtagsFrontendBundle/Controller/"
     type:     annotation
     prefix:   /

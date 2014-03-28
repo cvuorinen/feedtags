@@ -1,0 +1,18 @@
+{% extends 'FeedtagsFrontendBundle::layout.html.twig' %}
+{% block ng_app %}feedtagsApp{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'bundles/feedtagsfrontend/js/app.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block page_content %}
+    <h1 class="page-header">Welcome</h1>
+    <div ng-view ng-controller="FeedsController">
+        Loading...
+    </div>
+{% endblock %}
