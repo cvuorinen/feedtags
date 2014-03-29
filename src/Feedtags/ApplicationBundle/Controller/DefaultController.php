@@ -7,9 +7,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class DefaultController extends Controller
 {
+    /**
+     *
+     * @ApiDoc(
+     *  description="This is a description of your API method"
+     * )
+     *
+     * @Route("/test")
+     * @View()
+     */
+    public function testAction()
+    {
+        return ['foo' => 'bar'];
+    }
+
     /**
      * @Route("/create")
      */
