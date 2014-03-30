@@ -1,5 +1,4 @@
 services:
     feedtags_application.feed.controller:
         class: Feedtags\ApplicationBundle\Controller\FeedController
-        #arguments:
-        #    - @feedtags_application.feed.repository
+        arguments: [@feedtags_application.feed]

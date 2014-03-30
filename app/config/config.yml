@@ -108,6 +108,7 @@ fos_rest:
     param_fetcher_listener: true
     body_converter:
         enabled: true
+        validate: true
     body_listener:
         decoders:
             json: fos_rest.decoder.jsontoform
