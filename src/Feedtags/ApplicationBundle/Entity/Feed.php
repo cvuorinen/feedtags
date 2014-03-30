@@ -25,6 +25,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *
  * @ORM\Table(name="feeds")
  * @ORM\Entity(repositoryClass="Feedtags\ApplicationBundle\Repository\FeedRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Feed
 {
@@ -74,13 +75,13 @@ class Feed
     protected $url;
 
     /**
-     * Timestamp when last updated
+     * Timestamp when last modified
      *
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
-    protected $updated;
+    protected $modified;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -177,26 +178,26 @@ class Feed
     }
 
     /**
-     * Set updated
+     * Set modified
      *
-     * @param \DateTime $updated
+     * @param \DateTime $modified
      * @return Feed
      */
-    public function setUpdated($updated)
+    public function setModified($modified)
     {
-        $this->updated = $updated;
+        $this->modified = $modified;
     
         return $this;
     }
 
     /**
-     * Get updated
+     * Get modified
      *
      * @return \DateTime
      */
-    public function getUpdated()
+    public function getModified()
     {
-        return $this->updated;
+        return $this->modified;
     }
 
     /**
@@ -230,5 +231,21 @@ class Feed
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->modified = new \DateTime("now");
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->modified = new \DateTime("now");
     }
 }
