@@ -1,7 +1,13 @@
+imports:
+    - { resource: controllers.yml }
+
 parameters:
-#    feedtags_application.example.class: Feedtags\ApplicationBundle\Example
+    feedtags_application.feed.repository.class: Feedtags\ApplicationBundle\Repository\FeedRepository
+    feedtags_application.feed.entity.class: Feedtags\ApplicationBundle\Entity\Feed
 
 services:
-#    feedtags_application.example:
-#        class: %feedtags_application.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    feedtags_application.feed.repository:
+        class: %feedtags_application.feed.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments: [%feedtags_application.feed.entity.class%]
