@@ -4,6 +4,7 @@ imports:
 parameters:
     feedtags_application.feed.repository.class: Feedtags\ApplicationBundle\Repository\FeedRepository
     feedtags_application.feed.entity.class: Feedtags\ApplicationBundle\Entity\Feed
+    feedtags_application.feed.service.class: Feedtags\ApplicationBundle\Service\FeedService
 
 services:
     feedtags_application.feed.repository:
@@ -11,3 +12,6 @@ services:
         factory_service: doctrine.orm.entity_manager
         factory_method: getRepository
         arguments: [%feedtags_application.feed.entity.class%]
+    feedtags_application.feed:
+        class: %feedtags_application.feed.service.class%
+        arguments: [@feedtags_application.feed.repository]

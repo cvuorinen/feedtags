@@ -3,6 +3,7 @@
 namespace Feedtags\ApplicationBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Feedtags\ApplicationBundle\Entity\Feed;
 
 /**
  * FeedRepository
@@ -12,4 +13,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class FeedRepository extends EntityRepository
 {
+    /**
+     * Persist a Feed entity to database
+     *
+     * @param Feed $feed
+     *
+     * @return int Id of the saved Feed
+     */
+    public function save(Feed $feed)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($feed);
+        $entityManager->flush($feed);
+
+        return $feed->getId();
+    }
 }
