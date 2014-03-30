@@ -4,13 +4,13 @@ namespace Feedtags\ApplicationBundle\Controller;
 
 use Feedtags\ApplicationBundle\Entity\Feed;
 use Feedtags\ApplicationBundle\Service\FeedService;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\Annotations\View as RestView;
-use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -98,9 +98,10 @@ class FeedController
     {
         // Handle validation errors
         if (count($validationErrors) > 0) {
-            return View::create()->setStatusCode(Codes::HTTP_BAD_REQUEST)
-                ->setData($validationErrors);
-
+            return View::create(
+                ['errors' => $validationErrors],
+                Response::HTTP_BAD_REQUEST
+            );
         }
 
         return $this->feedService->save($feed);
