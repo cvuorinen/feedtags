@@ -1,2 +1,4 @@
 <h2>Feeds</h2>
-<p>TODO</p>
+<ul>
+    <li ng-repeat="feed in feeds"><a href="{{ feed.url }}">#{{ feed.id }} {{ feed.name }}</a></li>
+</ul>

@@ -2,7 +2,9 @@
  * Main app for Feedtags
  */
 angular.module('feedtagsApp', [
-    'ngRoute'
+    'ngRoute',
+    'feedtags.services',
+    'feedtags.controllers'
 ])
 .config(function($routeProvider) {
     $routeProvider
@@ -16,7 +18,4 @@ angular.module('feedtagsApp', [
         .otherwise({
             templateUrl: '/bundles/feedtagsfrontend/partials/error.html'
         });
-})
-.controller('FeedsController', function() {
-    console.log('FeedsController');
 });
