@@ -60,5 +60,13 @@ class FeedService
         return $this->fetchById($feedId);
     }
 
+    /**
+     * @param Feed $feed
+     */
+    public function remove(Feed $feed)
+    {
+        $this->feedRepository->remove($feed);
+    }
+
 
 }

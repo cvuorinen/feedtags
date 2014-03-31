@@ -29,4 +29,17 @@ class FeedRepository extends EntityRepository
 
         return $feed->getId();
     }
+
+    /**
+     * Remove a Feed entity from database
+     *
+     * @param Feed $feed
+     */
+    public function remove(Feed $feed)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->remove($feed);
+        $entityManager->flush($feed);
+    }
 }

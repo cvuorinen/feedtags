@@ -10,8 +10,8 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use FOS\RestBundle\Controller\Annotations\View as RestView;
-use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View as RestView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
@@ -34,7 +34,7 @@ class FeedController
     }
 
     /**
-     * Return a collection with all Feeds
+     * Return a collection of Feeds
      *
      * @ApiDoc(
      *  statusCodes={200="OK"}
@@ -42,9 +42,9 @@ class FeedController
      *
      * @Route("/")
      * @Method("GET")
-     * @RestView()
+     * @Rest\View()
      */
-    public function listAction()
+    public function getCollectionAction()
     {
         return $this->feedService->fetchAll();
     }
@@ -59,19 +59,19 @@ class FeedController
      *  },
      *  statusCodes={
      *      200="OK",
-     *      404="Feed not found for the given id"
+     *      404="Feed not found"
      *  }
      * )
      *
      * @Route("/{id}", requirements={"id" = "\d+"})
      * @ParamConverter("feed", class="FeedtagsApplicationBundle:Feed")
      * @Method("GET")
-     * @RestView()
+     * @Rest\View()
      */
     public function getAction(Feed $feed = null)
     {
         if (!$feed) {
-            throw new NotFoundHttpException('Feed not found for the given id.');
+            throw new NotFoundHttpException('Feed not found.');
         }
 
         return $feed;
@@ -92,18 +92,44 @@ class FeedController
      * @Route("/")
      * @ParamConverter("feed", converter="fos_rest.request_body")
      * @Method("POST")
-     * @RestView(statusCode=201)
+     * @Rest\View(statusCode=201)
      */
     public function createAction(Feed $feed, ConstraintViolationListInterface $validationErrors)
     {
         // Handle validation errors
         if (count($validationErrors) > 0) {
-            return View::create(
+            return RestView::create(
                 ['errors' => $validationErrors],
                 Response::HTTP_BAD_REQUEST
             );
         }
 
         return $this->feedService->save($feed);
+    }
+
+    /**
+     * Remove a Feed
+     *
+     * @ApiDoc(
+     *  statusCodes={
+     *      204="OK",
+     *      404="Feed not found"
+     *  }
+     * )
+     *
+     * @Route("/{id}", requirements={"id" = "\d+"})
+     * @ParamConverter("feed", class="FeedtagsApplicationBundle:Feed")
+     * @Method("DELETE")
+     * @Rest\View(statusCode=204)
+     */
+    public function removeAction(Feed $feed = null)
+    {
+        if (!$feed) {
+            throw new NotFoundHttpException('Feed not found.');
+        }
+
+        $this->feedService->remove($feed);
+
+        return [];
     }
 }
