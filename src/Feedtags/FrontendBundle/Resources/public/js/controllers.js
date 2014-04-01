@@ -1,4 +1,7 @@
-angular.module('feedtags.controllers', []).controller('FeedsController', function($scope, Feed) {
-    console.log('FeedsController');
-    $scope.feeds = Feed.query();
-});
+angular.module('feedtags.controllers', [])
+    .controller('FeedsController',function ($scope, Feed) {
+        // Fetch feeds from server
+        $scope.feeds = Feed.query();
+    }).controller('FeedItemsController', function ($scope, feedItems) {
+        $scope.feedItems = feedItems;
+    });
