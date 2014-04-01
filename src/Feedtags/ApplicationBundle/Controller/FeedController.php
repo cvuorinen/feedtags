@@ -132,4 +132,28 @@ class FeedController
 
         return [];
     }
+
+    /**
+     * Return a collection of FeedItems for a single Feed by the given id
+     *
+     * @ApiDoc(
+     *  statusCodes={
+     *      200="OK",
+     *      404="Feed not found"
+     *  }
+     * )
+     *
+     * @Route("/{id}/items", requirements={"id" = "\d+"})
+     * @ParamConverter("feed", class="FeedtagsApplicationBundle:Feed")
+     * @Method("GET")
+     * @Rest\View()
+     */
+    public function getItemCollectionAction(Feed $feed = null)
+    {
+        if (!$feed) {
+            throw new NotFoundHttpException('Feed not found.');
+        }
+
+        return $feed->getItems();
+    }
 }
