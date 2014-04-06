@@ -17,17 +17,11 @@ class FeedRepository extends EntityRepository
      * Persist a Feed entity to database
      *
      * @param Feed $feed
-     *
-     * @return int Id of the saved Feed
      */
     public function save(Feed $feed)
     {
-        $entityManager = $this->getEntityManager();
-
-        $entityManager->persist($feed);
-        $entityManager->flush($feed);
-
-        return $feed->getId();
+        $this->_em->persist($feed);
+        $this->_em->flush($feed);
     }
 
     /**
@@ -37,9 +31,7 @@ class FeedRepository extends EntityRepository
      */
     public function remove(Feed $feed)
     {
-        $entityManager = $this->getEntityManager();
-
-        $entityManager->remove($feed);
-        $entityManager->flush($feed);
+        $this->_em->remove($feed);
+        $this->_em->flush($feed);
     }
 }
