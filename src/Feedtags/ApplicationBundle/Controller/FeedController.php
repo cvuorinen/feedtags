@@ -3,6 +3,7 @@
 namespace Feedtags\ApplicationBundle\Controller;
 
 use Feedtags\ApplicationBundle\Entity\Feed;
+use Feedtags\ApplicationBundle\Model\FeedInputModel;
 use Feedtags\ApplicationBundle\Service\FeedService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -28,6 +29,9 @@ class FeedController
      */
     private $feedService;
 
+    /**
+     * @param FeedService $feedService
+     */
     public function __construct(FeedService $feedService)
     {
         $this->feedService = $feedService;
@@ -81,7 +85,7 @@ class FeedController
      * Create a new Feed
      *
      * @ApiDoc(
-     *  input="Feedtags\ApplicationBundle\Entity\Feed",
+     *  input="Feedtags\ApplicationBundle\Model\FeedInputModel",
      *  output="Feedtags\ApplicationBundle\Entity\Feed",
      *  statusCodes={
      *      201="Created",
@@ -90,11 +94,11 @@ class FeedController
      * )
      *
      * @Route("/")
-     * @ParamConverter("feed", converter="fos_rest.request_body")
+     * @ParamConverter("feedInput", converter="fos_rest.request_body")
      * @Method("POST")
      * @Rest\View(statusCode=201)
      */
-    public function createAction(Feed $feed, ConstraintViolationListInterface $validationErrors)
+    public function createAction(FeedInputModel $feedInput, ConstraintViolationListInterface $validationErrors)
     {
         // Handle validation errors
         if (count($validationErrors) > 0) {
@@ -104,7 +108,7 @@ class FeedController
             );
         }
 
-        return $this->feedService->save($feed);
+        return $this->feedService->create($feedInput);
     }
 
     /**
