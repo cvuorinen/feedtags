@@ -21,7 +21,6 @@ class LoadTempData implements FixtureInterface
         $feed = new Feed();
         $feed->setName('Test feed');
         $feed->setDescription('Just testing feeds.');
-        $feed->setUpdated(new \DateTime());
         $feed->setUrl('http://feed.example.com/test');
 
         $item = new FeedItem();

@@ -3,12 +3,28 @@
 namespace Feedtags\ApplicationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 
 /**
  * FeedItem
  *
+ * @package Feedtags\ApplicationBundle\Entity
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "feedtags_application_feeditem_get",
+ *          parameters = {
+ *              "id" = "expr(object.getId())"
+ *          }
+ *      )
+ * )
+ *
  * @ORM\Table(name="feed_items")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Feedtags\ApplicationBundle\Repository\FeedItemRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class FeedItem
 {
@@ -57,7 +73,18 @@ class FeedItem
     protected $content;
 
     /**
+     * Timestamp when last modified
+     *
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $modified;
+
+    /**
      * @var \Feedtags\ApplicationBundle\Entity\Feed
+     *
+     * @Serializer\Exclude
      *
      * @ORM\ManyToOne(targetEntity="Feed", inversedBy="items")
      * @ORM\JoinColumn(name="feed_id", referencedColumnName="id")
@@ -191,6 +218,29 @@ class FeedItem
     }
 
     /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return FeedItem
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
      * Set feed
      *
      * @param \Feedtags\ApplicationBundle\Entity\Feed $feed
@@ -211,5 +261,21 @@ class FeedItem
     public function getFeed()
     {
         return $this->feed;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->modified = new \DateTime("now");
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->modified = new \DateTime("now");
     }
 }

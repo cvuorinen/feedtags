@@ -1,0 +1,7 @@
+services:
+    feedtags_application.feed.controller:
+        class: Feedtags\ApplicationBundle\Controller\FeedController
+        arguments: [@feedtags_application.feed]
+    feedtags_application.feed_item.controller:
+        class: Feedtags\ApplicationBundle\Controller\FeedItemController
+        arguments: [@feedtags_application.feed_item]

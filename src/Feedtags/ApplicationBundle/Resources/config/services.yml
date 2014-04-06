@@ -1,7 +1,28 @@
+imports:
+    - { resource: controllers.yml }
+
 parameters:
-#    feedtags_application.example.class: Feedtags\ApplicationBundle\Example
+    feedtags_application.feed.repository.class: Feedtags\ApplicationBundle\Repository\FeedRepository
+    feedtags_application.feed.entity.class: Feedtags\ApplicationBundle\Entity\Feed
+    feedtags_application.feed.service.class: Feedtags\ApplicationBundle\Service\FeedService
+    feedtags_application.feed_item.repository.class: Feedtags\ApplicationBundle\Repository\FeedItemRepository
+    feedtags_application.feed_item.entity.class: Feedtags\ApplicationBundle\Entity\FeedItem
+    feedtags_application.feed_item.service.class: Feedtags\ApplicationBundle\Service\FeedItemService
 
 services:
-#    feedtags_application.example:
-#        class: %feedtags_application.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    feedtags_application.feed.repository:
+        class: %feedtags_application.feed.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments: [%feedtags_application.feed.entity.class%]
+    feedtags_application.feed:
+        class: %feedtags_application.feed.service.class%
+        arguments: [@feedtags_application.feed.repository]
+    feedtags_application.feed_item.repository:
+        class: %feedtags_application.feed_item.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments: [%feedtags_application.feed_item.entity.class%]
+    feedtags_application.feed_item:
+        class: %feedtags_application.feed_item.service.class%
+        arguments: [@feedtags_application.feed_item.repository]
