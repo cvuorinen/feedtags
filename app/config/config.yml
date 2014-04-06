@@ -122,6 +122,11 @@ fos_rest:
         json: true
     serializer:
         serialize_null: true
+    exception:
+        codes:
+            'Feedtags\ApplicationBundle\Service\Exception\InvalidFeedException': 400
+        messages:
+            'Feedtags\ApplicationBundle\Service\Exception\InvalidFeedException': true
 
 # BazingaHateoasBundle Configuration
 bazinga_hateoas:
