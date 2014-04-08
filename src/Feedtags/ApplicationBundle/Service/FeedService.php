@@ -24,12 +24,23 @@ class FeedService
     private $feedLoader;
 
     /**
-     * @param FeedRepository $feedRepository
+     * @var FeedItemService
      */
-    public function __construct(FeedRepository $feedRepository, FeedLoader $feedLoader)
-    {
+    private $feedItemService;
+
+    /**
+     * @param FeedRepository  $feedRepository
+     * @param FeedLoader      $feedLoader
+     * @param FeedItemService $feedItemService
+     */
+    public function __construct(
+        FeedRepository $feedRepository,
+        FeedLoader $feedLoader,
+        FeedItemService $feedItemService
+    ) {
         $this->feedRepository = $feedRepository;
         $this->feedLoader = $feedLoader;
+        $this->feedItemService = $feedItemService;
     }
 
     /**
@@ -47,7 +58,7 @@ class FeedService
      *
      * @return Feed The saved Feed
      */
-    public function save(Feed $feed)
+    private function save(Feed $feed)
     {
         $this->feedRepository->save($feed);
 
@@ -63,13 +74,22 @@ class FeedService
      */
     public function create(FeedInputModel $feedInput)
     {
+        # TODO check if already exists in database
         $feed = new Feed();
         $feed->setUrl($feedInput->getUrl());
 
+        // Load feed info from the provided URL into the entity
         $this->feedLoader->loadFeed($feed);
 
         # TODO validate feed
-        return $this->save($feed);
+
+        // Feed entity must be saved before updating items
+        $this->save($feed);
+
+        // Load and save feed items
+        $this->feedItemService->updateFeedItems($feed);
+
+        return $feed;
     }
 
     /**
@@ -78,5 +98,19 @@ class FeedService
     public function remove(Feed $feed)
     {
         $this->feedRepository->remove($feed);
+    }
+
+    /**
+     * Update a single feed by fetching info and items
+     *
+     * @param Feed $feed Feed to update
+     */
+    public function updateFeed(Feed $feed)
+    {
+        $this->feedLoader->loadFeed($feed);
+
+        $this->feedItemService->updateFeedItems($feed);
+
+        $this->save($feed);
     }
 }

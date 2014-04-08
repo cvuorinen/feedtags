@@ -37,7 +37,8 @@ class FeedLoader
      *
      * @param Entity\Feed $feed
      *
-     * @return array Array of FeedItem entities
+     * @return Entity\FeedItem[] Array of FeedItem entities
+     * @throws InvalidFeedException When feed import failed
      */
     public function loadFeedItems(Entity\Feed $feed)
     {
@@ -72,7 +73,7 @@ class FeedLoader
         } catch (\Exception $e) {
             # TODO log
             // Feed import failed
-            throw new InvalidFeedException("Invalid feed URL");
+            throw new InvalidFeedException("Error loading feed. Check feed URL");
         }
 
         return $feedData;

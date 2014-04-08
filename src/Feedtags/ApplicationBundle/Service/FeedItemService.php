@@ -2,8 +2,8 @@
 
 namespace Feedtags\ApplicationBundle\Service;
 
-
 use Feedtags\ApplicationBundle\Entity\Feed;
+use Feedtags\ApplicationBundle\Entity\FeedItem;
 use Feedtags\ApplicationBundle\Repository\FeedItemRepository;
 
 /**
@@ -14,22 +14,29 @@ use Feedtags\ApplicationBundle\Repository\FeedItemRepository;
 class FeedItemService
 {
     /**
-     * @var \Feedtags\ApplicationBundle\Repository\FeedRepository
+     * @var \Feedtags\ApplicationBundle\Repository\FeedItemRepository
      */
     private $feedItemRepository;
 
     /**
-     * @param FeedItemRepository $feedItemRepository
+     * @var FeedLoader
      */
-    public function __construct(FeedItemRepository $feedItemRepository)
+    private $feedLoader;
+
+    /**
+     * @param FeedItemRepository $feedItemRepository
+     * @param FeedLoader         $feedLoader
+     */
+    public function __construct(FeedItemRepository $feedItemRepository, FeedLoader $feedLoader)
     {
         $this->feedItemRepository = $feedItemRepository;
+        $this->feedLoader = $feedLoader;
     }
 
     /**
      * Return all FeedItem entities
      *
-     * @return array Array of Feed entities
+     * @return FeedItem[] Array of FeedItem entities
      */
     public function fetchAll()
     {
@@ -37,14 +44,34 @@ class FeedItemService
     }
 
     /**
-     * Return one FeedItem entity by the given id
+     * @param FeedItem $feedItem
      *
-     * @param int $feedItemId
-     *
-     * @return null|Feed
+     * @return FeedItem The saved FeedItem
      */
-    private function fetchById($feedItemId)
+    public function save(FeedItem $feedItem)
     {
-        return $this->feedItemRepository->find($feedItemId);
+        $this->feedItemRepository->save($feedItem);
+
+        return $feedItem;
+    }
+
+    /**
+     * Update feed items for a single feed
+     *
+     * @param Feed $feed
+     */
+    public function updateFeedItems(Feed $feed)
+    {
+        $items = $this->feedLoader->loadFeedItems($feed);
+
+        foreach ($items as $item) {
+            # TODO check if already exists
+            $feed->addItem($item);
+            $item->setFeed($feed);
+
+            #$this->save($item);
+        }
+
+        $this->feedItemRepository->saveMultiple($items);
     }
 }
