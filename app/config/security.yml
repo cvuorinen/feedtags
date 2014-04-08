@@ -31,15 +31,16 @@ security:
                 target: /
             oauth:
                 resource_owners:
-                    google: "/login/check-google"
-                login_path:   /login
-                failure_path: /login
+                    google: "/oauth/login-google"
+                login_path:   /oauth
+                failure_path: /oauth
                 oauth_user_provider:
                     service: feedtags_user.user.provider
 
     access_control:
         # Allow frontpage & login to anonymoous
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/oauth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # Everything else requires login
         - { path: ^/, role: ROLE_USER }

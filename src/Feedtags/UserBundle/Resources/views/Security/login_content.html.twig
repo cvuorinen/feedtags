@@ -1,0 +1,6 @@
+{% trans_default_domain 'FeedtagsUserBundle' %}
+
+<h2>{{ 'Sign in with'|trans }}</h2>
+<a href="{{ path('hwi_oauth_service_redirect', {'service': 'google'}) }}">
+    <img src="{{ asset('bundles/feedtagsuser/images/google-login.png') }}" alt="Google"/>
+</a>
