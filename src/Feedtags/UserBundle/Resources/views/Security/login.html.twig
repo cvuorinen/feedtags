@@ -7,9 +7,6 @@
     <div>{{ error|trans }}</div>
 {% endif %}
 
-<h2>{{ 'Sign in with'|trans }}</h2>
-<a href="{{ path('hwi_oauth_service_redirect', {'service': 'google'}) }}">
-    <img src="{{ asset('bundles/feedtagsuser/images/google-login.png') }}" alt="Google"/>
-</a>
+{% include "FeedtagsUserBundle:Security:login_content.html.twig" %}
 
 {% endblock fos_user_content %}

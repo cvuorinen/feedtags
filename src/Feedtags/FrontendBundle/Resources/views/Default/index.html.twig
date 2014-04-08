@@ -12,7 +12,11 @@
 
 {% block page_content %}
     <h1 class="page-header">Welcome</h1>
-    <div ng-view>
-        Loading...
-    </div>
+    {% if is_granted('ROLE_USER') %}
+        <div ng-view>
+            Loading...
+        </div>
+    {% else %}
+        {% include "FeedtagsUserBundle:Security:login_content.html.twig" %}
+    {% endif %}
 {% endblock %}
