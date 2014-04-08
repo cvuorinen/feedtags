@@ -23,6 +23,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *      )
  * )
  *
+ * @Serializer\ExclusionPolicy("none")
+ *
  * @ORM\Table(name="feeds")
  * @ORM\Entity(repositoryClass="Feedtags\ApplicationBundle\Repository\FeedRepository")
  * @ORM\HasLifecycleCallbacks()
