@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-
 /**
  * FeedItem
  *
@@ -21,6 +20,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          }
  *      )
  * )
+ *
+ * @Serializer\ExclusionPolicy("none")
  *
  * @ORM\Table(name="feed_items")
  * @ORM\Entity(repositoryClass="Feedtags\ApplicationBundle\Repository\FeedItemRepository")
