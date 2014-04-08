@@ -21,18 +21,18 @@ fos_user_register:
 #HWIOauthBundle Routes
 #hwi_oauth_login:
 #    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
-#    prefix:   /login
+#    prefix:   /oauth
 
 #hwi_oauth_connect:
 #    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
-#    prefix:   /login
+#    prefix:   /oauth
 
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
-    prefix:   /login
+    prefix:   /oauth
 
 google_login:
-    pattern: /login/check-google
+    pattern: /oauth/login-google
 
 # NelmioApiDocBundle Routes
 NelmioApiDocBundle:
