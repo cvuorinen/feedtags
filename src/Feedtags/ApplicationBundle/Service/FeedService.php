@@ -5,6 +5,7 @@ namespace Feedtags\ApplicationBundle\Service;
 use Feedtags\ApplicationBundle\Entity\Feed;
 use Feedtags\ApplicationBundle\Repository\FeedRepository;
 use Feedtags\ApplicationBundle\Model\FeedInputModel;
+use Symfony\Component\Validator\Validator;
 
 /**
  * Class FeedService
@@ -29,6 +30,11 @@ class FeedService
     private $feedItemService;
 
     /**
+     * @var \Symfony\Component\Validator\Validator
+     */
+    private $validator;
+
+    /**
      * @param FeedRepository  $feedRepository
      * @param FeedLoader      $feedLoader
      * @param FeedItemService $feedItemService
@@ -36,11 +42,13 @@ class FeedService
     public function __construct(
         FeedRepository $feedRepository,
         FeedLoader $feedLoader,
-        FeedItemService $feedItemService
+        FeedItemService $feedItemService,
+        Validator $validator
     ) {
         $this->feedRepository = $feedRepository;
         $this->feedLoader = $feedLoader;
         $this->feedItemService = $feedItemService;
+        $this->validator = $validator;
     }
 
     /**
@@ -81,9 +89,8 @@ class FeedService
         // Load feed info from the provided URL into the entity
         $this->feedLoader->loadFeed($feed);
 
-        # TODO validate feed
-
         // Feed entity must be saved before updating items
+        $this->validateFeed($feed);
         $this->save($feed);
 
         // Load and save feed items
@@ -112,5 +119,23 @@ class FeedService
         $this->feedItemService->updateFeedItems($feed);
 
         $this->save($feed);
+    }
+
+    /**
+     * @param Feed $feed
+     *
+     * @return Feed
+     * @throws Exception\FeedValidationException
+     */
+    private function validateFeed(Feed $feed)
+    {
+        $violations = $this->validator->validate($feed);
+
+        // Throw FeedValidationException with violations list
+        if (count($violations)) {
+            throw new Exception\FeedValidationException($violations);
+        }
+
+        return $feed;
     }
 }

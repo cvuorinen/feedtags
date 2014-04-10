@@ -4,6 +4,7 @@ namespace Feedtags\ApplicationBundle\Controller;
 
 use Feedtags\ApplicationBundle\Entity\Feed;
 use Feedtags\ApplicationBundle\Model\FeedInputModel;
+use Feedtags\ApplicationBundle\Service\Exception\AbstractValidationException;
 use Feedtags\ApplicationBundle\Service\FeedService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -100,15 +101,19 @@ class FeedController
      */
     public function createAction(FeedInputModel $feedInput, ConstraintViolationListInterface $validationErrors)
     {
-        // Handle validation errors
+        // Handle input model validation errors
         if (count($validationErrors) > 0) {
-            return RestView::create(
-                ['errors' => $validationErrors],
-                Response::HTTP_BAD_REQUEST
-            );
+            return $this->validationErrorResponse($validationErrors);
         }
 
-        return $this->feedService->create($feedInput);
+        // Try to create feed and catch entity validation errors
+        try {
+            $feed = $this->feedService->create($feedInput);
+        } catch (AbstractValidationException $e) {
+            return $this->validationErrorResponse($e->getValidationErrors());
+        }
+
+        return $feed;
     }
 
     /**
@@ -159,5 +164,18 @@ class FeedController
         }
 
         return $feed->getItems();
+    }
+
+    /**
+     * @param ConstraintViolationListInterface $validationErrors
+     *
+     * @return RestView
+     */
+    protected function validationErrorResponse(ConstraintViolationListInterface $validationErrors)
+    {
+        return RestView::create(
+            ['errors' => $validationErrors],
+            Response::HTTP_BAD_REQUEST
+        );
     }
 }

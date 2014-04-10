@@ -22,6 +22,7 @@ services:
             - @feedtags_application.feed.repository
             - @feedtags_application.feed_loader
             - @feedtags_application.feed_item
+            - @validator
     feedtags_application.feed_item.repository:
         class: %feedtags_application.feed_item.repository.class%
         factory_service: doctrine.orm.entity_manager
