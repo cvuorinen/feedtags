@@ -2,9 +2,10 @@
 
 namespace Feedtags\ApplicationBundle\Service;
 
-
 use Feedtags\ApplicationBundle\Entity\Feed;
 use Feedtags\ApplicationBundle\Repository\FeedRepository;
+use Feedtags\ApplicationBundle\Model\FeedInputModel;
+use Symfony\Component\Validator\Validator;
 
 /**
  * Class FeedService
@@ -19,11 +20,36 @@ class FeedService
     private $feedRepository;
 
     /**
-     * @param FeedRepository $feedRepository
+     * @var FeedLoader
      */
-    public function __construct(FeedRepository $feedRepository)
-    {
+    private $feedLoader;
+
+    /**
+     * @var FeedItemService
+     */
+    private $feedItemService;
+
+    /**
+     * @var \Symfony\Component\Validator\Validator
+     */
+    private $validator;
+
+    /**
+     * @param FeedRepository                         $feedRepository
+     * @param FeedLoader                             $feedLoader
+     * @param FeedItemService                        $feedItemService
+     * @param \Symfony\Component\Validator\Validator $validator
+     */
+    public function __construct(
+        FeedRepository $feedRepository,
+        FeedLoader $feedLoader,
+        FeedItemService $feedItemService,
+        Validator $validator
+    ) {
         $this->feedRepository = $feedRepository;
+        $this->feedLoader = $feedLoader;
+        $this->feedItemService = $feedItemService;
+        $this->validator = $validator;
     }
 
     /**
@@ -37,27 +63,38 @@ class FeedService
     }
 
     /**
-     * Return one Feed entity by the given id
-     *
-     * @param int $feedId
-     *
-     * @return null|Feed
-     */
-    private function fetchById($feedId)
-    {
-        return $this->feedRepository->find($feedId);
-    }
-
-    /**
      * @param Feed $feed
      *
      * @return Feed The saved Feed
      */
-    public function save(Feed $feed)
+    private function save(Feed $feed)
     {
-        $feedId = $this->feedRepository->save($feed);
+        $this->feedRepository->save($feed);
 
-        return $this->fetchById($feedId);
+        return $feed;
+    }
+
+    /**
+     * Create a new feed entity from input model
+     *
+     * @param FeedInputModel $feedInput
+     *
+     * @return Feed
+     */
+    public function create(FeedInputModel $feedInput)
+    {
+        // Check if already exists in database
+        # TODO link to current user
+        $feed = $this->feedRepository->getByUrl($feedInput->getUrl());
+
+        if (empty($feed)) {
+            $feed = $this->createFromInputModel($feedInput);
+        }
+
+        // Load and save feed items
+        $this->feedItemService->updateFeedItems($feed);
+
+        return $feed;
     }
 
     /**
@@ -68,5 +105,54 @@ class FeedService
         $this->feedRepository->remove($feed);
     }
 
+    /**
+     * Update a single feed by fetching info and items
+     *
+     * @param Feed $feed Feed to update
+     */
+    public function updateFeed(Feed $feed)
+    {
+        $this->feedLoader->loadFeed($feed);
 
+        $this->feedItemService->updateFeedItems($feed);
+
+        $this->save($feed);
+    }
+
+    /**
+     * @param Feed $feed
+     *
+     * @return Feed
+     * @throws Exception\FeedValidationException
+     */
+    private function validateFeed(Feed $feed)
+    {
+        $violations = $this->validator->validate($feed);
+
+        // Throw FeedValidationException with violations list
+        if (count($violations)) {
+            throw new Exception\FeedValidationException($violations);
+        }
+
+        return $feed;
+    }
+
+    /**
+     * @param FeedInputModel $feedInput
+     *
+     * @return Feed
+     */
+    protected function createFromInputModel(FeedInputModel $feedInput)
+    {
+        $feed = new Feed();
+        $feed->setUrl($feedInput->getUrl());
+
+        // Load feed info from the provided URL into the entity
+        $this->feedLoader->loadFeed($feed);
+
+        $this->validateFeed($feed);
+        $this->save($feed);
+
+        return $feed;
+    }
 }

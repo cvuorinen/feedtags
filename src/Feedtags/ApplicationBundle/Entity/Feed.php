@@ -23,6 +23,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *      )
  * )
  *
+ * @Serializer\ExclusionPolicy("none")
+ *
  * @ORM\Table(name="feeds")
  * @ORM\Entity(repositoryClass="Feedtags\ApplicationBundle\Repository\FeedRepository")
  * @ORM\HasLifecycleCallbacks()
@@ -73,6 +75,18 @@ class Feed
      * @ORM\Column(type="string", unique=true, length=255)
      */
     protected $url;
+
+    /**
+     * Site URL
+     *
+     * @var string
+     *
+     * @Assert\Length(max = "255")
+     * @Assert\Url
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $siteUrl;
 
     /**
      * Timestamp when last modified
@@ -131,6 +145,29 @@ class Feed
     }
 
     /**
+     * Set description
+     *
+     * @param string $description
+     * @return Feed
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set url
      *
      * @param string $url
@@ -153,28 +190,27 @@ class Feed
         return $this->url;
     }
 
-
     /**
-     * Set description
+     * Set siteUrl
      *
-     * @param string $description
+     * @param string $siteUrl
      * @return Feed
      */
-    public function setDescription($description)
+    public function setSiteUrl($siteUrl)
     {
-        $this->description = $description;
-    
+        $this->siteUrl = $siteUrl;
+
         return $this;
     }
 
     /**
-     * Get description
+     * Get siteUrl
      *
-     * @return string 
+     * @return string
      */
-    public function getDescription()
+    public function getSiteUrl()
     {
-        return $this->description;
+        return $this->siteUrl;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Feedtags\ApplicationBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Feedtags\ApplicationBundle\Entity\FeedItem;
 
 /**
  * FeedItemRepository
@@ -12,4 +13,49 @@ use Doctrine\ORM\EntityRepository;
  */
 class FeedItemRepository extends EntityRepository
 {
+    /**
+     * @param string $url
+     *
+     * @return null|FeedItem
+     */
+    public function getByUrl($url)
+    {
+        return $this->findOneBy(['url' => $url]);
+    }
+
+    /**
+     * Persist a FeedItem entity to database
+     *
+     * @param FeedItem $feedItem
+     */
+    public function save(FeedItem $feedItem)
+    {
+        $this->_em->persist($feedItem);
+        $this->_em->flush($feedItem);
+    }
+
+    /**
+     * Persist multiple FeedItem entities to database
+     *
+     * @param FeedItem[] $feedItems
+     */
+    public function saveMultiple(array $feedItems)
+    {
+        foreach ($feedItems as $feedItem) {
+            $this->_em->persist($feedItem);
+        }
+
+        $this->_em->flush();
+    }
+
+    /**
+     * Remove a FeedItem entity from database
+     *
+     * @param FeedItem $feedItem
+     */
+    public function remove(FeedItem $feedItem)
+    {
+        $this->_em->remove($feedItem);
+        $this->_em->flush($feedItem);
+    }
 }

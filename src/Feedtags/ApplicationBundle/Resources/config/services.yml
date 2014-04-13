@@ -8,6 +8,7 @@ parameters:
     feedtags_application.feed_item.repository.class: Feedtags\ApplicationBundle\Repository\FeedItemRepository
     feedtags_application.feed_item.entity.class: Feedtags\ApplicationBundle\Entity\FeedItem
     feedtags_application.feed_item.service.class: Feedtags\ApplicationBundle\Service\FeedItemService
+    feedtags_application.feed_loader.class: Feedtags\ApplicationBundle\Service\FeedLoader
 
 services:
     feedtags_application.feed.repository:
@@ -17,7 +18,11 @@ services:
         arguments: [%feedtags_application.feed.entity.class%]
     feedtags_application.feed:
         class: %feedtags_application.feed.service.class%
-        arguments: [@feedtags_application.feed.repository]
+        arguments:
+            - @feedtags_application.feed.repository
+            - @feedtags_application.feed_loader
+            - @feedtags_application.feed_item
+            - @validator
     feedtags_application.feed_item.repository:
         class: %feedtags_application.feed_item.repository.class%
         factory_service: doctrine.orm.entity_manager
@@ -25,4 +30,8 @@ services:
         arguments: [%feedtags_application.feed_item.entity.class%]
     feedtags_application.feed_item:
         class: %feedtags_application.feed_item.service.class%
-        arguments: [@feedtags_application.feed_item.repository]
+        arguments:
+            - @feedtags_application.feed_item.repository
+            - @feedtags_application.feed_loader
+    feedtags_application.feed_loader:
+        class: %feedtags_application.feed_loader.class%
