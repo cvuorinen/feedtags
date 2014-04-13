@@ -35,9 +35,10 @@ class FeedService
     private $validator;
 
     /**
-     * @param FeedRepository  $feedRepository
-     * @param FeedLoader      $feedLoader
-     * @param FeedItemService $feedItemService
+     * @param FeedRepository                         $feedRepository
+     * @param FeedLoader                             $feedLoader
+     * @param FeedItemService                        $feedItemService
+     * @param \Symfony\Component\Validator\Validator $validator
      */
     public function __construct(
         FeedRepository $feedRepository,
@@ -82,16 +83,13 @@ class FeedService
      */
     public function create(FeedInputModel $feedInput)
     {
-        # TODO check if already exists in database
-        $feed = new Feed();
-        $feed->setUrl($feedInput->getUrl());
+        // Check if already exists in database
+        # TODO link to current user
+        $feed = $this->feedRepository->getByUrl($feedInput->getUrl());
 
-        // Load feed info from the provided URL into the entity
-        $this->feedLoader->loadFeed($feed);
-
-        // Feed entity must be saved before updating items
-        $this->validateFeed($feed);
-        $this->save($feed);
+        if (empty($feed)) {
+            $feed = $this->createFromInputModel($feedInput);
+        }
 
         // Load and save feed items
         $this->feedItemService->updateFeedItems($feed);
@@ -135,6 +133,25 @@ class FeedService
         if (count($violations)) {
             throw new Exception\FeedValidationException($violations);
         }
+
+        return $feed;
+    }
+
+    /**
+     * @param FeedInputModel $feedInput
+     *
+     * @return Feed
+     */
+    protected function createFromInputModel(FeedInputModel $feedInput)
+    {
+        $feed = new Feed();
+        $feed->setUrl($feedInput->getUrl());
+
+        // Load feed info from the provided URL into the entity
+        $this->feedLoader->loadFeed($feed);
+
+        $this->validateFeed($feed);
+        $this->save($feed);
 
         return $feed;
     }

@@ -14,6 +14,16 @@ use Feedtags\ApplicationBundle\Entity\FeedItem;
 class FeedItemRepository extends EntityRepository
 {
     /**
+     * @param string $url
+     *
+     * @return null|FeedItem
+     */
+    public function getByUrl($url)
+    {
+        return $this->findOneBy(['url' => $url]);
+    }
+
+    /**
      * Persist a FeedItem entity to database
      *
      * @param FeedItem $feedItem

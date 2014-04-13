@@ -62,16 +62,21 @@ class FeedItemService
      */
     public function updateFeedItems(Feed $feed)
     {
-        $items = $this->feedLoader->loadFeedItems($feed);
+        $newItems = [];
+        $feedItems = $this->feedLoader->loadFeedItems($feed);
 
-        foreach ($items as $item) {
-            # TODO check if already exists
+        foreach ($feedItems as $item) {
+            // Skip if already exists (maybe should update?)
+            if (!empty($this->feedItemRepository->getByUrl($item->getUrl()))) {
+                continue;
+            }
+
             $feed->addItem($item);
             $item->setFeed($feed);
 
-            #$this->save($item);
+            $newItems[] = $item;
         }
 
-        $this->feedItemRepository->saveMultiple($items);
+        $this->feedItemRepository->saveMultiple($newItems);
     }
 }
