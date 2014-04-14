@@ -106,6 +106,28 @@ class FeedService
     }
 
     /**
+     * Update all feeds
+     *
+     * @return int Number of updated feeds
+     */
+    public function updateAllFeeds()
+    {
+        $feeds = $this->fetchAll();
+        $updatedFeeds = 0;
+
+        foreach ($feeds as $feed) {
+            try {
+                $this->updateFeed($feed);
+                $updatedFeeds++;
+            } catch (\Exception $e) {
+                # TODO log exception
+            }
+        }
+
+        return $updatedFeeds;
+    }
+
+    /**
      * Update a single feed by fetching info and items
      *
      * @param Feed $feed Feed to update
