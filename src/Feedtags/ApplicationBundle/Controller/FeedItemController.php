@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View as RestView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -38,13 +39,26 @@ class FeedItemController
      *  statusCodes={200="OK"}
      * )
      *
+     * @Rest\QueryParam(
+     *  name="page",
+     *  requirements="\d+",
+     *  default="1",
+     *  description="Page of the collection."
+     * )
+     *
+     *
      * @Route("/")
      * @Method("GET")
      * @Rest\View()
      */
-    public function getCollectionAction()
+    public function getCollectionAction(ParamFetcherInterface $paramFetcher)
     {
-        return $this->feedItemService->fetchAll();
+        $page = $paramFetcher->get('page');
+
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+
+        return $this->feedItemService->fetchAll($limit, $offset);
     }
 
 

@@ -36,11 +36,15 @@ class FeedItemService
     /**
      * Return all FeedItem entities
      *
+     * @param int|null   $limit
+     * @param int|null   $offset
+     * @param array|null $sortBy
+     *
      * @return FeedItem[] Array of FeedItem entities
      */
-    public function fetchAll()
+    public function fetchAll($limit = null, $offset = null, $sortBy = null)
     {
-        return $this->feedItemRepository->findAll();
+        return $this->feedItemRepository->fetch($limit, $offset, $sortBy);
     }
 
     /**
