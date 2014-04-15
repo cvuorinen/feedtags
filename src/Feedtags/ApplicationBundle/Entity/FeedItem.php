@@ -21,7 +21,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *      )
  * )
  *
- * @Serializer\ExclusionPolicy("none")
+ * @Serializer\ExclusionPolicy("all")
  *
  * @ORM\Table(name="feed_items")
  * @ORM\Entity(repositoryClass="Feedtags\ApplicationBundle\Repository\FeedItemRepository")
@@ -32,6 +32,8 @@ class FeedItem
     /**
      * @var integer
      *
+     * @Serializer\Expose
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -41,12 +43,16 @@ class FeedItem
     /**
      * @var string
      *
+     * @Serializer\Expose
+     *
      * @ORM\Column(name="title", type="string", length=255)
      */
     protected $title;
 
     /**
      * @var string
+     *
+     * @Serializer\Expose
      *
      * @ORM\Column(type="string", unique=true, length=255)
      */
@@ -55,6 +61,8 @@ class FeedItem
     /**
      * @var string
      *
+     * @Serializer\Expose
+     *
      * @ORM\Column(type="string", length=255)
      */
     protected $identifier;
@@ -62,12 +70,16 @@ class FeedItem
     /**
      * @var \DateTime
      *
+     * @Serializer\Expose
+     *
      * @ORM\Column(type="datetime")
      */
     protected $published;
 
     /**
      * @var string
+     *
+     * @Serializer\Expose
      *
      * @ORM\Column(name="content", type="text")
      */
@@ -85,7 +97,8 @@ class FeedItem
     /**
      * @var \Feedtags\ApplicationBundle\Entity\Feed
      *
-     * @Serializer\Exclude
+     * @Serializer\Expose
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="Feed", inversedBy="items")
      * @ORM\JoinColumn(name="feed_id", referencedColumnName="id")
