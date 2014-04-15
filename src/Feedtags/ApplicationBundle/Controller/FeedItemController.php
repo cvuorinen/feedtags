@@ -53,12 +53,9 @@ class FeedItemController
      */
     public function getCollectionAction(ParamFetcherInterface $paramFetcher)
     {
-        $page = $paramFetcher->get('page');
-
-        $limit = 5;
-        $offset = ($page - 1) * $limit;
-
-        return $this->feedItemService->fetchAll($limit, $offset);
+        return $this->feedItemService->getFeedItems(
+            $paramFetcher->get('page')
+        );
     }
 
 
