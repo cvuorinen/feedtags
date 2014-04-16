@@ -1,9 +1,9 @@
 <h2>Feed items</h2>
 <div class="feed-items">
-    <ul class="{{ itemListType }}">
-        <li ng-repeat="item in feedItems" ng-click="alert('foo');">
+    <ul data-feed-item-list class="{{ itemListType }}">
+        <li ng-repeat="item in feedItems" data-feed-item="item">
             <div class="item-title">{{ item.title }}</div>
-            <div class="item-content">{{ item.content_text }}</div>
+            <div class="item-content-preview">{{ item.content_text }}</div>
             <div class="item-feed">
                 <feed-icon feed="item.feed"></feed-icon>
                 <a href="#/feeds/{{ item.feed.id }}">{{ item.feed.name }}</a>
