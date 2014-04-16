@@ -292,4 +292,17 @@ class FeedItem
     {
         $this->modified = new \DateTime("now");
     }
+
+    /**
+     * Get content as plain text (no html tags)
+     *
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("content_text")
+     *
+     * @return string
+     */
+    public function getContentText()
+    {
+        return strip_tags($this->getContent());
+    }
 }

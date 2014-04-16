@@ -40,7 +40,16 @@ body {
 }
 
 .feed-items ul.items-list-compact li .item-title {
+    display: inline-block;
     font-weight: bold;
+}
+
+.feed-items ul.items-list-compact li .item-content {
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    color: #999;
 }
 
 .feed-items ul.items-list-compact li .item-feed .feed-icon img {
