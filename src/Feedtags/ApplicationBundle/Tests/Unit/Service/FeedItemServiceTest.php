@@ -115,4 +115,21 @@ class FeedItemServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->service->updateFeedItems($feed);
     }
+
+    public function testUpdateFeedItemsAddsNewItemsToFeed()
+    {
+        $feed = $this->prophesize(Feed::class);
+
+        $newItems = [
+            new FeedItem(),
+            new FeedItem(),
+        ];
+
+        $this->feedLoader->loadFeedItems($feed->reveal())->willReturn($newItems);
+
+        $this->service->updateFeedItems($feed->reveal());
+
+        $feed->addItem($newItems[0])->shouldHaveBeenCalled();
+        $feed->addItem($newItems[1])->shouldHaveBeenCalled();
+    }
 }
