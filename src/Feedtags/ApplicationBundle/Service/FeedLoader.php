@@ -4,7 +4,6 @@ namespace Feedtags\ApplicationBundle\Service;
 
 use Feedtags\ApplicationBundle\Entity;
 use Feedtags\ApplicationBundle\Service\Exception\InvalidFeedException;
-use Zend\Feed\Reader\Reader as FeedReader;
 
 /**
  * Class FeedLoaderService
@@ -13,6 +12,19 @@ use Zend\Feed\Reader\Reader as FeedReader;
  */
 class FeedLoader
 {
+    /**
+     * @var FeedFactory
+     */
+    private $feedFactory;
+
+    /**
+     * @param FeedFactory $feedFactory
+     */
+    public function __construct(FeedFactory $feedFactory)
+    {
+        $this->feedFactory = $feedFactory;
+    }
+
     /**
      * Load feed channel information for a single Feed entity
      *
@@ -68,15 +80,6 @@ class FeedLoader
      */
     protected function importFeed($feedUrl)
     {
-        try {
-            $feedData = FeedReader::import($feedUrl);
-        } catch (\Exception $e) {
-            # TODO log
-            // Feed import failed
-            throw new InvalidFeedException("Error loading feed. Check feed URL");
-        }
-
-        return $feedData;
+        return $this->feedFactory->importFeed($feedUrl);
     }
-
 }

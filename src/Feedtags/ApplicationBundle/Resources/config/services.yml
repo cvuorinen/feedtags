@@ -10,6 +10,7 @@ parameters:
     feedtags_application.feed_item.entity.class: Feedtags\ApplicationBundle\Entity\FeedItem
     feedtags_application.feed_item.service.class: Feedtags\ApplicationBundle\Service\FeedItemService
     feedtags_application.feed_loader.class: Feedtags\ApplicationBundle\Service\FeedLoader
+    feedtags_application.feed_factory.class: Feedtags\ApplicationBundle\Service\FeedFactory
 
 services:
     feedtags_application.feed.repository:
@@ -37,3 +38,7 @@ services:
             - %feedtags_application.items_per_page%
     feedtags_application.feed_loader:
         class: %feedtags_application.feed_loader.class%
+        arguments:
+            - @feedtags_application.feed_factory
+    feedtags_application.feed_factory:
+        class: %feedtags_application.feed_factory.class%
