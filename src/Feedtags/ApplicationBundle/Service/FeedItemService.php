@@ -82,7 +82,7 @@ class FeedItemService
 
         foreach ($feedItems as $item) {
             // Skip if already exists (maybe should update?)
-            if (!empty($this->feedItemRepository->getByUrl($item->getUrl()))) {
+            if ($this->itemAlreadyExists($item)) {
                 continue;
             }
 
@@ -93,5 +93,19 @@ class FeedItemService
         }
 
         $this->feedItemRepository->saveMultiple($newItems);
+    }
+
+    /**
+     * @param FeedItem $newItem
+     *
+     * @return bool TRUE when new item already exists in the db
+     */
+    private function itemAlreadyExists(FeedItem $newItem)
+    {
+        $existingItem = $this->feedItemRepository->getByUrl(
+            $newItem->getUrl()
+        );
+
+        return !empty($existingItem);
     }
 }
