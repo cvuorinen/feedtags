@@ -119,7 +119,7 @@ class FeedService
             try {
                 $this->updateFeed($feed);
                 $updatedFeeds++;
-            } catch (\Exception $e) {
+            } catch (Exception\InvalidFeedException $e) {
                 # TODO log exception
             }
         }
