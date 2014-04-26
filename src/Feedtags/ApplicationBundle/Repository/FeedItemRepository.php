@@ -14,6 +14,11 @@ use Feedtags\ApplicationBundle\Entity\FeedItem;
 class FeedItemRepository extends EntityRepository
 {
     /**
+     * @var array Default sort used in fetch() method.
+     */
+    private static $defaultSort = ['published' => 'DESC'];
+
+    /**
      * @param string $url
      *
      * @return null|FeedItem
@@ -21,6 +26,22 @@ class FeedItemRepository extends EntityRepository
     public function getByUrl($url)
     {
         return $this->findOneBy(['url' => $url]);
+    }
+
+    /**
+     * Fetch entities in the repository with the provided limit, offset and sort.
+     *
+     * @param int|null   $limit
+     * @param int|null   $offset
+     * @param array|null $sortBy
+     *
+     * @return array The entities.
+     */
+    public function fetch($limit = null, $offset = null, $sortBy = null)
+    {
+        $sortBy = $sortBy ?: self::$defaultSort;
+
+        return $this->findBy([], $sortBy, $limit, $offset);
     }
 
     /**

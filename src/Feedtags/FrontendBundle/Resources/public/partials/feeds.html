@@ -1,7 +1,7 @@
 <h2>Feeds</h2>
 <ul>
     <li ng-repeat="feed in feeds">
-        <a href="{{ feed.url }}">
-            <img src="https://www.google.com/s2/favicons?domain={{ feed.url }}&alt=feed" alt=""/>#{{ feed.id }} {{ feed.name }}</a>
+        <a href="#/feeds/{{ feed.id }}">
+            <feed-icon feed="feed"></feed-icon> #{{ feed.id }} {{ feed.name }}</a>
     </li>
 </ul>

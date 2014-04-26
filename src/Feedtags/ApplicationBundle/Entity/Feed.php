@@ -23,7 +23,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *      )
  * )
  *
- * @Serializer\ExclusionPolicy("none")
+ * @Serializer\ExclusionPolicy("all")
  *
  * @ORM\Table(name="feeds")
  * @ORM\Entity(repositoryClass="Feedtags\ApplicationBundle\Repository\FeedRepository")
@@ -33,6 +33,8 @@ class Feed
 {
     /**
      * @var integer
+     *
+     * @Serializer\Expose
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -44,6 +46,8 @@ class Feed
      * Name of the feed
      *
      * @var string
+     *
+     * @Serializer\Expose
      *
      * @Assert\Length(min = "2", max = "255")
      * @Assert\NotNull
@@ -57,6 +61,8 @@ class Feed
      *
      * @var string
      *
+     * @Serializer\Expose
+     *
      * @Assert\Length(max = "255")
      *
      * @ORM\Column(type="string", length=255)
@@ -67,6 +73,8 @@ class Feed
      * Feed URL
      *
      * @var string
+     *
+     * @Serializer\Expose
      *
      * @Assert\Length(max = "255")
      * @Assert\Url
@@ -80,6 +88,8 @@ class Feed
      * Site URL
      *
      * @var string
+     *
+     * @Serializer\Expose
      *
      * @Assert\Length(max = "255")
      * @Assert\Url
@@ -99,8 +109,6 @@ class Feed
 
     /**
      * @var \Doctrine\Common\Collections\Collection
-     *
-     * @Serializer\Exclude
      *
      * @ORM\OneToMany(targetEntity="FeedItem", mappedBy="feed")
      */

@@ -24,3 +24,34 @@ body {
 .main .page-header {
     margin-top: 0;
 }
+
+/**
+ * Feed item list
+ */
+.feed-items > ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.feed-items > ul.items-list-compact > li {
+    margin-bottom: 5px;
+    padding-top: 5px;
+    border-top: 1px solid #ccc;
+}
+
+.feed-items > ul.items-list-compact > li .item-title {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.feed-items > ul.items-list-compact > li .item-content-preview {
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    color: #999;
+}
+
+.feed-items > ul.items-list-compact > li .item-feed .feed-icon > img {
+    vertical-align: middle;
+}

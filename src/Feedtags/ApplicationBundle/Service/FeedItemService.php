@@ -24,23 +24,38 @@ class FeedItemService
     private $feedLoader;
 
     /**
+     * @var int
+     */
+    private $itemsPerPage;
+
+    /**
      * @param FeedItemRepository $feedItemRepository
      * @param FeedLoader         $feedLoader
+     * @param int                $itemsPerPage
      */
-    public function __construct(FeedItemRepository $feedItemRepository, FeedLoader $feedLoader)
+    public function __construct(FeedItemRepository $feedItemRepository, FeedLoader $feedLoader, $itemsPerPage)
     {
         $this->feedItemRepository = $feedItemRepository;
         $this->feedLoader = $feedLoader;
+        $this->itemsPerPage = $itemsPerPage;
     }
 
     /**
-     * Return all FeedItem entities
+     * Fetch paginated FeedItem entity collection
+     *
+     * @param int $page
      *
      * @return FeedItem[] Array of FeedItem entities
      */
-    public function fetchAll()
+    public function getFeedItems($page = 1)
     {
-        return $this->feedItemRepository->findAll();
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        $offset = ($page - 1) * $this->itemsPerPage;
+
+        return $this->feedItemRepository->fetch($this->itemsPerPage, $offset);
     }
 
     /**
