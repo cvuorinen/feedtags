@@ -19,8 +19,6 @@ class FeedItemServiceTest extends \PHPUnit_Framework_TestCase
 {
     use ProphecyTestTrait;
 
-    const ITEMS_PER_PAGE = 5;
-
     /**
      * @var FeedItemService
      */
@@ -36,6 +34,11 @@ class FeedItemServiceTest extends \PHPUnit_Framework_TestCase
      */
     private $feedLoader;
 
+    /**
+     * @var int
+     */
+    private $itemsPerPage = 5;
+
     public function up()
     {
         $this->feedItemRepository = $this->prophesize(FeedItemRepository::class);
@@ -44,13 +47,13 @@ class FeedItemServiceTest extends \PHPUnit_Framework_TestCase
         $this->service = new FeedItemService(
             $this->feedItemRepository->reveal(),
             $this->feedLoader->reveal(),
-            self::ITEMS_PER_PAGE
+            $this->itemsPerPage
         );
     }
 
     public function testGetFeedItemsLimitsFetchByItemsPerPage()
     {
-        $this->feedItemRepository->fetch(self::ITEMS_PER_PAGE, 0)->shouldBeCalled();
+        $this->feedItemRepository->fetch($this->itemsPerPage, 0)->shouldBeCalled();
 
         $this->service->getFeedItems(1);
     }
@@ -58,16 +61,16 @@ class FeedItemServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetFeedItemsSetsCorrectOffset()
     {
         $page = 2;
-        $expectedOffset = self::ITEMS_PER_PAGE;
+        $expectedOffset = $this->itemsPerPage;
 
-        $this->feedItemRepository->fetch(self::ITEMS_PER_PAGE, $expectedOffset)->shouldBeCalled();
+        $this->feedItemRepository->fetch($this->itemsPerPage, $expectedOffset)->shouldBeCalled();
 
         $this->service->getFeedItems($page);
     }
 
     public function testGetFeedItemsSetsPageOneOnInvalidPageNum()
     {
-        $this->feedItemRepository->fetch(self::ITEMS_PER_PAGE, 0)->shouldBeCalled();
+        $this->feedItemRepository->fetch($this->itemsPerPage, 0)->shouldBeCalled();
 
         $this->service->getFeedItems(-1);
     }
